@@ -23,30 +23,33 @@ import hudson.model.TaskListener;
 
 public class QMetryConnection {
 
-    private String url;
-    private String key;
+	private String url;
+	private String key;
 
-    public QMetryConnection(String url, String key) {
-	this.url = url;
-	this.key = key;
-    }
+	public QMetryConnection(String url, String key) {
+		this.url = url;
+		this.key = key;
+	}
 
-    public String getUrl() {
-	return this.url;
-    }
+	public String getUrl() {
+		return this.url;
+	}
 
-    public String getKey() {
-	return this.key;
-    }
+	public String getKey() {
+		return this.key;
+	}
 
-    public boolean validateConnection() {
-	// TODO validate URL,Key
-	return true;
-    }
+	public boolean validateConnection() {
+		// TODO validate URL,Key
+		return true;
+	}
+	
+	private static final int ONE_MIN = 60000;
+	private static final int MAX_ATTEMPTS = 5;
 
 	public void uploadFileToTestSuite(String filePath, String testSuiteName, String testSName, String tsFolderPath, String automationFramework, String automationHierarchy,
-									  String buildName, String platformName, String project, String release, String cycle, String pluginName, /*BuildListener*/TaskListener listener,
-									  int buildnumber, String proxyUrl, String testCaseField, String testSuiteField, String skipWarning, String isMatchingRequired) throws Exception {
+			String buildName, String platformName, String project, String release, String cycle, String pluginName, /*BuildListener*/TaskListener listener,
+			int buildnumber, String proxyUrl, String testCaseField, String testSuiteField, String skipWarning, String isMatchingRequired) throws Exception {
 
 		CloseableHttpClient httpClient = null;
 		CloseableHttpResponse response = null;
@@ -168,41 +171,42 @@ public class QMetryConnection {
 		httpClient.close();
 		response.close();
 	}
-    
-    public void getRequeststatus(Object requestId, CloseableHttpClient httpClient, String pluginName, TaskListener listener) throws Exception {
 
-	String statusString = null;
-	try {
-	    HttpGet getStatus = new HttpGet(getUrl() + "/rest/admin/status/automation/" + requestId);
-	    getStatus.addHeader("apiKey",getKey());
-	    getStatus.addHeader("scope","default");
+	public void getRequeststatus(Object requestId, CloseableHttpClient httpClient, String pluginName, TaskListener listener) throws Exception {
 
-	    CloseableHttpResponse statusResponse = httpClient.execute(getStatus);
-	    statusString = EntityUtils.toString(statusResponse.getEntity());
-	    JSONObject statusObj = (JSONObject) new JSONParser().parse(statusString);
+		String statusString = null;
+		try {
+			HttpGet getStatus = new HttpGet(getUrl() + "/rest/admin/status/automation/" + requestId);
+			getStatus.addHeader("apiKey",getKey());
+			getStatus.addHeader("scope","default");
 
-		String s = pluginName + " : Response --> " + statusObj.toString().replace("\\/", "/");
+			CloseableHttpResponse statusResponse = httpClient.execute(getStatus);
+			statusString = EntityUtils.toString(statusResponse.getEntity());
+			JSONObject statusObj = (JSONObject) new JSONParser().parse(statusString);
 
-		if (statusResponse.getStatusLine().getStatusCode() != 200) {
-			listener.getLogger().println(pluginName+"Couldn't get request details.");
-			listener.getLogger().println(pluginName+"Status Code : "+ statusResponse.getStatusLine().getStatusCode());
-	    }else if (statusObj.get("status").toString().equals("In Queue")) {
-			listener.getLogger().println(s);
-			requestagain(requestId, httpClient, pluginName, listener);
-		}else if(statusObj.get("status").toString().equals("In Progress")) {
-			getRequeststatus(requestId, httpClient, pluginName, listener);
-		} else{
-			listener.getLogger().println(s);
+			String s = pluginName + " : Response --> " + statusObj.toString().replace("\\/", "/");
+
+			if (statusResponse.getStatusLine().getStatusCode() != 200) {
+				listener.getLogger().println(pluginName+"Couldn't get request details.");
+				listener.getLogger().println(pluginName+"Status Code : "+ statusResponse.getStatusLine().getStatusCode());
+			}else if (statusObj.get("status").toString().equals("In Queue")) {
+				listener.getLogger().println(s);
+				requestagain(requestId, httpClient, pluginName, listener);
+			}else if(statusObj.get("status").toString().equals("In Progress")) {
+				listener.getLogger().println(s);
+				checkForInProgress(requestId, httpClient, pluginName, listener);
+			} else{
+				listener.getLogger().println(s);
+			}
+			if(statusObj.get("status").toString().equals("Completed")) {
+				listener.getLogger().println(pluginName+" : Test results uploaded successfully!");
+			}
+
+		} catch(ParseException e) {
+			listener.getLogger().println(pluginName + " : ERROR :: QMetryConnection in uploadFileToTestSuite : '"+statusString+"'");
+			throw new QMetryException("Error uploading file to server!");
 		}
-		if(statusObj.get("status").toString().equals("Completed")) {
-			listener.getLogger().println(pluginName+" : Test results uploaded successfully!");
-	    }
-
-	} catch(ParseException e) {
-	    listener.getLogger().println(pluginName + " : ERROR :: QMetryConnection in uploadFileToTestSuite : '"+statusString+"'");
-	    throw new QMetryException("Error uploading file to server!");
 	}
-    }
 
 	//Request again method for 10 min 2nd API call
 	public void requestagain(Object requestId, CloseableHttpClient httpClient, String pluginName, TaskListener listener) throws Exception{
@@ -216,17 +220,45 @@ public class QMetryConnection {
 		boolean flag = false;
 		//Loop to start timer ( Run from current time to next 10 mins in future)
 		while (System.currentTimeMillis() < end) {
+			Thread.sleep(ONE_MIN);
 			CloseableHttpResponse statusResponse = httpClient.execute(getStatus);
 			statusString = EntityUtils.toString(statusResponse.getEntity());
 			JSONObject statusObj = (JSONObject) new JSONParser().parse(statusString);
 			String s = pluginName + " : Response --> " + statusObj.toString().replace("\\/", "/");
-		    //In Progress status in logs
+			//In Progress status in logs
 			if(statusObj.get("status").toString().equals("In Progress")&& flag==false) {
 				listener.getLogger().println(s);
 				flag = true;
 			}
 			// Completed or Failed status in logs
-			if(statusObj.get("status").toString().equals("Completed")||statusObj.get("status").toString().equals("Failed")){
+			if(statusObj.get("status").toString().equals("Completed")|| statusObj.get("status").toString().equals("Failed")){
+				listener.getLogger().println(s);
+				break;
+			}
+		}
+	}
+
+	//check method for call being in progress
+	public void checkForInProgress(Object requestId, CloseableHttpClient httpClient, String pluginName, TaskListener listener) throws Exception{
+		String statusString = null;
+		HttpGet getStatus = new HttpGet(getUrl() + "/rest/admin/status/automation/" + requestId);
+		getStatus.addHeader("apiKey",getKey());
+		getStatus.addHeader("scope","default");
+		for (int i = 0; i<=MAX_ATTEMPTS; i++) {
+			Thread.sleep(ONE_MIN);
+			CloseableHttpResponse statusResponse = httpClient.execute(getStatus);
+			statusString = EntityUtils.toString(statusResponse.getEntity());
+			JSONObject statusObj = (JSONObject) new JSONParser().parse(statusString);
+			
+			String s = pluginName + " : Response --> " + statusObj.toString().replace("\\/", "/");
+			
+			//In Progress status in logs
+			if(statusObj.get("status").toString().equals("In Progress")) {
+				listener.getLogger().println("Check Attempt :"+ i);
+				listener.getLogger().println(s);
+			}
+			// Completed or Failed status in logs
+			if(statusObj.get("status").toString().equals("Completed")|| statusObj.get("status").toString().equals("Failed")){
 				listener.getLogger().println(s);
 				break;
 			}
