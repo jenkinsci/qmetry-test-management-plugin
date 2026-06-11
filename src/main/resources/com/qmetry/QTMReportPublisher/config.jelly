@@ -69,7 +69,11 @@
 		<f:entry title="Test Suite Fields" field="testsuiteFields">
 			<f:textbox placeholder="Enter Test Suite Fields"/>
 		</f:entry>
-		
+
+		<f:entry title="Test Execution UDFs" field="testExecutionUDFields">
+			<f:textbox placeholder="Enter Test Execution UDF Fields"/>
+		</f:entry>
+
 		<f:entry title="Skip Warning" field="skipWarning">
 			<f:select />
 		</f:entry>

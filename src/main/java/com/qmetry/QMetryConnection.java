@@ -46,7 +46,7 @@ public class QMetryConnection {
 
 	public void uploadFileToTestSuite(String filePath, String testSuiteName, String testSName, String tsFolderPath, String automationFramework, String automationHierarchy,
 									  String buildName, String platformName, String project, String release, String cycle, String pluginName, /*BuildListener*/TaskListener listener,
-									  int buildnumber, String proxyUrl, String testCaseField, String testSuiteField, String skipWarning, String isMatchingRequired) throws Exception {
+									  int buildnumber, String proxyUrl, String testCaseField, String testSuiteField, String testExecutionUDField, String skipWarning, String isMatchingRequired) throws Exception {
 
 		CloseableHttpClient httpClient = null;
 		CloseableHttpResponse response = null;
@@ -113,6 +113,10 @@ public class QMetryConnection {
 		if(isMatchingRequired!=null && !isMatchingRequired.isEmpty()) {
 			listener.getLogger().println(pluginName + " : isMatchingRequired '"+ isMatchingRequired +"'");
 			builder.addTextBody("is_matching_required", isMatchingRequired, ContentType.TEXT_PLAIN);
+		}
+		if(testExecutionUDField!=null && !testExecutionUDField.isEmpty()) {
+			listener.getLogger().println(pluginName + " : target test execution UDF Fields '"+ testExecutionUDField +"'");
+			builder.addTextBody("testexecutionudf_fields", testExecutionUDField, ContentType.TEXT_PLAIN);
 		}
 
 		File f = new File(filePath);
