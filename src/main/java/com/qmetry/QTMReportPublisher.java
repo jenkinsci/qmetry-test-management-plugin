@@ -47,14 +47,14 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
     private final String cycle;
     private final String testcaseFields;
     private final String testsuiteFields;
-    private final String testExecutionUDFields;
+    private final String testRunFields;
     private final String skipWarning;
     private final String isMatchingRequired;
     
     @DataBoundConstructor
     public QTMReportPublisher(final String qtmUrl, final String qtmAutomationApiKey, final String proxyUrl, final String automationFramework, final String automationHierarchy,
                               final String testResultFilePath, final String buildName, final String testSuiteName, final String testSName, final String tsFolderPath, final String platformName,
-                              final String project, final String release, final String cycle, final boolean disableaction, final String testcaseFields, final String testsuiteFields, final String testExecutionUDFields, final String skipWarning, final String isMatchingRequired) {
+                              final String project, final String release, final String cycle, final boolean disableaction, final String testcaseFields, final String testsuiteFields, final String testRunFields, final String skipWarning, final String isMatchingRequired) {
         
         this.disableaction = disableaction;
         this.qtmUrl = qtmUrl;
@@ -73,7 +73,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
         this.release = release;
         this.testcaseFields = testcaseFields;
         this.testsuiteFields = testsuiteFields;
-        this.testExecutionUDFields = testExecutionUDFields;
+        this.testRunFields = testRunFields;
         this.skipWarning = skipWarning;
         this.isMatchingRequired = isMatchingRequired;
     }
@@ -146,8 +146,8 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
 	return testsuiteFields;
     }
 
-    public String getTestExecutionUDFields() {
-	return testExecutionUDFields;
+    public String getTestRunFields() {
+	return testRunFields;
     }
 
     public String getSkipWarning() {
@@ -211,7 +211,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                 
                 String testSuiteField_chkd = StringUtils.trimToEmpty(getTestsuiteFields());
 
-                String testExecutionUDField_chkd = StringUtils.trimToEmpty(getTestExecutionUDFields());
+                String testRunField_chkd = StringUtils.trimToEmpty(getTestRunFields());
 
                 String skipWarning_chkd = StringUtils.trimToEmpty(getSkipWarning());
 
@@ -235,7 +235,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                     project_chkd= env.expand(project_chkd);
                     testCaseField_chkd = env.expand(testCaseField_chkd);
                     testSuiteField_chkd =  env.expand(testSuiteField_chkd);
-                    testExecutionUDField_chkd = env.expand(testExecutionUDField_chkd);
+                    testRunField_chkd = env.expand(testRunField_chkd);
                     skipWarning_chkd = env.expand(skipWarning_chkd);
                     isMatchingRequired_chkd = env.expand(isMatchingRequired_chkd);
                 }
@@ -342,7 +342,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                                                      buildnumber,
                                                      testCaseField_chkd,
                                                      testSuiteField_chkd,
-                                                     testExecutionUDField_chkd,
+                                                     testRunField_chkd,
                                                      skipWarning_chkd,
                                                      isMatchingRequired_chkd);
             }
