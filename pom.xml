@@ -9,7 +9,7 @@
         <relativePath />
     </parent>
     <artifactId>qmetry-test-management</artifactId>
-    <version>1.15-SNAPSHOT</version>
+    <version>1.15</version>
     <packaging>hpi</packaging>
     <properties>
         <jenkins.version>2.7.3</jenkins.version>
@@ -23,7 +23,7 @@
         <connection>scm:git:ssh://github.com/jenkinsci/qmetry-test-management-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/jenkinsci/qmetry-test-management-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/qmetry-test-management-plugin</url>
-        <tag>qmetry-test-management-1.14</tag>
+        <tag>qmetry-test-management-1.15</tag>
     </scm>
     <licenses>
         <license>
@@ -69,6 +69,25 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <debug>true</debug>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>net.java.sezpoz</groupId>
+                            <artifactId>sezpoz</artifactId>
+                            <version>1.13</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
     <dependencies>
         <dependency>
