@@ -41,6 +41,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
     private final String testSuiteName;
     private final String testSName;
     private final String tsFolderPath;
+    private final String tcFolderPath;
     private final String platformName;
     private final String project;
     private final String release;
@@ -53,7 +54,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
     
     @DataBoundConstructor
     public QTMReportPublisher(final String qtmUrl, final String qtmAutomationApiKey, final String proxyUrl, final String automationFramework, final String automationHierarchy,
-                              final String testResultFilePath, final String buildName, final String testSuiteName, final String testSName, final String tsFolderPath, final String platformName,
+                              final String testResultFilePath, final String buildName, final String testSuiteName, final String testSName, final String tsFolderPath, final String tcFolderPath, final String platformName,
                               final String project, final String release, final String cycle, final boolean disableaction, final String testcaseFields, final String testsuiteFields, final String testRunFields, final String skipWarning, final String isMatchingRequired) {
         
         this.disableaction = disableaction;
@@ -67,6 +68,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
         this.testSuiteName = testSuiteName;
         this.testSName = testSName;
         this.tsFolderPath = tsFolderPath;
+        this.tcFolderPath = tcFolderPath;
         this.platformName = platformName;
         this.project = project;
         this.cycle = cycle;
@@ -121,7 +123,11 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
     public String getTsFolderPath() {
         return tsFolderPath;
     }
-    
+
+    public String getTcFolderPath() {
+        return tcFolderPath;
+    }
+
     public String getPlatformName() {
         return this.platformName;
     }
@@ -200,7 +206,9 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                 String testSName_chkd = StringUtils.trimToEmpty(getTestSName());
                 
                 String tsFolderPath_chkd = StringUtils.trimToEmpty(getTsFolderPath());
-                
+
+                String tcFolderPath_chkd = StringUtils.trimToEmpty(getTcFolderPath());
+
                 String release_chkd = StringUtils.trimToEmpty(getRelease());
                 
                 String cycle_chkd = StringUtils.trimToEmpty(getCycle());
@@ -230,6 +238,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                     testSuiteName_chkd= env.expand(testSuiteName_chkd);
                     testSName_chkd= env.expand(testSName_chkd);
                     tsFolderPath_chkd= env.expand(tsFolderPath_chkd);
+                    tcFolderPath_chkd= env.expand(tcFolderPath_chkd);
                     release_chkd= env.expand(release_chkd);
                     cycle_chkd= env.expand(cycle_chkd);
                     project_chkd= env.expand(project_chkd);
@@ -332,6 +341,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                                                      testSuiteName_chkd,
                                                      testSName_chkd,
                                                      tsFolderPath_chkd,
+                                                     tcFolderPath_chkd,
                                                      automationFramework_chkd,
                                                      automationHierarchy_chkd,
                                                      buildName_chkd,

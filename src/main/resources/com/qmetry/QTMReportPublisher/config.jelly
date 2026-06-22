@@ -45,7 +45,11 @@
 		<f:entry title="Test Suite Folder Path" field="tsFolderPath" >
 			<f:textbox placeholder="Test Suite Folder Path" id="tsFolderPath"/>
 		</f:entry>
-	
+
+		<f:entry title="Test Case Folder Path" field="tcFolderPath" >
+			<f:textbox placeholder="Test Case Folder Path" id="tcFolderPath"/>
+		</f:entry>
+
 		<f:entry title="Release" field="release">
 			<f:textbox placeholder="Target Release ID or Name" />
 		</f:entry>

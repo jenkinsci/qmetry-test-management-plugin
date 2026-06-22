@@ -44,7 +44,7 @@ public class QMetryConnection {
 	return true;
     }
 
-	public void uploadFileToTestSuite(String filePath, String testSuiteName, String testSName, String tsFolderPath, String automationFramework, String automationHierarchy,
+	public void uploadFileToTestSuite(String filePath, String testSuiteName, String testSName, String tsFolderPath, String tcFolderPath, String automationFramework, String automationHierarchy,
 									  String buildName, String platformName, String project, String release, String cycle, String pluginName, /*BuildListener*/TaskListener listener,
 									  int buildnumber, String proxyUrl, String testCaseField, String testSuiteField, String testRunField, String skipWarning, String isMatchingRequired) throws Exception {
 
@@ -77,6 +77,11 @@ public class QMetryConnection {
 		{
 			listener.getLogger().println(pluginName + " : test suite folder path '"+tsFolderPath+"'");
 			builder.addTextBody("tsFolderPath", tsFolderPath, ContentType.TEXT_PLAIN);
+		}
+		if(tcFolderPath!=null && !tcFolderPath.isEmpty())
+		{
+			listener.getLogger().println(pluginName + " : test case folder path '"+tcFolderPath+"'");
+			builder.addTextBody("tcFolderPath", tcFolderPath, ContentType.TEXT_PLAIN);
 		}
 		if(buildName!=null && !buildName.isEmpty()) {
 			listener.getLogger().println(pluginName + " : using build '"+buildName+"'");
@@ -116,7 +121,7 @@ public class QMetryConnection {
 		}
 		if(testRunField!=null && !testRunField.isEmpty()) {
 			listener.getLogger().println(pluginName + " : testrun_fields '"+ testRunField +"'");
-			builder.addTextBody("testexecutionudf_fields", testRunField, ContentType.TEXT_PLAIN);
+			builder.addTextBody("testrun_fields", testRunField, ContentType.TEXT_PLAIN);
 		}
 
 		File f = new File(filePath);
