@@ -2,3 +2,8 @@
 .settings/org.eclipse.m2e.core.prefs
 *.prefs
 .classpath
+/.project
+.project
+/docs/
+/bin/
+/.vscode/

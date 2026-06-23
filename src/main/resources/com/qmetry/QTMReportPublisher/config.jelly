@@ -45,7 +45,11 @@
 		<f:entry title="Test Suite Folder Path" field="tsFolderPath" >
 			<f:textbox placeholder="Test Suite Folder Path" id="tsFolderPath"/>
 		</f:entry>
-	
+
+		<f:entry title="Test Case Folder Path" field="tcFolderPath" >
+			<f:textbox placeholder="Test Case Folder Path" id="tcFolderPath"/>
+		</f:entry>
+
 		<f:entry title="Release" field="release">
 			<f:textbox placeholder="Target Release ID or Name" />
 		</f:entry>
@@ -69,7 +73,11 @@
 		<f:entry title="Test Suite Fields" field="testsuiteFields">
 			<f:textbox placeholder="Enter Test Suite Fields"/>
 		</f:entry>
-		
+
+		<f:entry title="Test Run Fields" field="testRunFields">
+			<f:textbox placeholder="Enter Test Run Fields (Supports UDFs only)"/>
+		</f:entry>
+
 		<f:entry title="Skip Warning" field="skipWarning">
 			<f:select />
 		</f:entry>

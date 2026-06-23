@@ -41,19 +41,21 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
     private final String testSuiteName;
     private final String testSName;
     private final String tsFolderPath;
+    private final String tcFolderPath;
     private final String platformName;
     private final String project;
     private final String release;
     private final String cycle;
     private final String testcaseFields;
     private final String testsuiteFields;
+    private final String testRunFields;
     private final String skipWarning;
     private final String isMatchingRequired;
     
     @DataBoundConstructor
     public QTMReportPublisher(final String qtmUrl, final String qtmAutomationApiKey, final String proxyUrl, final String automationFramework, final String automationHierarchy,
-                              final String testResultFilePath, final String buildName, final String testSuiteName, final String testSName, final String tsFolderPath, final String platformName,
-                              final String project, final String release, final String cycle, final boolean disableaction, final String testcaseFields, final String testsuiteFields, final String skipWarning, final String isMatchingRequired) {
+                              final String testResultFilePath, final String buildName, final String testSuiteName, final String testSName, final String tsFolderPath, final String tcFolderPath, final String platformName,
+                              final String project, final String release, final String cycle, final boolean disableaction, final String testcaseFields, final String testsuiteFields, final String testRunFields, final String skipWarning, final String isMatchingRequired) {
         
         this.disableaction = disableaction;
         this.qtmUrl = qtmUrl;
@@ -66,12 +68,14 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
         this.testSuiteName = testSuiteName;
         this.testSName = testSName;
         this.tsFolderPath = tsFolderPath;
+        this.tcFolderPath = tcFolderPath;
         this.platformName = platformName;
         this.project = project;
         this.cycle = cycle;
         this.release = release;
         this.testcaseFields = testcaseFields;
         this.testsuiteFields = testsuiteFields;
+        this.testRunFields = testRunFields;
         this.skipWarning = skipWarning;
         this.isMatchingRequired = isMatchingRequired;
     }
@@ -119,7 +123,11 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
     public String getTsFolderPath() {
         return tsFolderPath;
     }
-    
+
+    public String getTcFolderPath() {
+        return tcFolderPath;
+    }
+
     public String getPlatformName() {
         return this.platformName;
     }
@@ -143,7 +151,11 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
     public String getTestsuiteFields() {
 	return testsuiteFields;
     }
-    
+
+    public String getTestRunFields() {
+	return testRunFields;
+    }
+
     public String getSkipWarning() {
 	return skipWarning;
     }
@@ -194,7 +206,9 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                 String testSName_chkd = StringUtils.trimToEmpty(getTestSName());
                 
                 String tsFolderPath_chkd = StringUtils.trimToEmpty(getTsFolderPath());
-                
+
+                String tcFolderPath_chkd = StringUtils.trimToEmpty(getTcFolderPath());
+
                 String release_chkd = StringUtils.trimToEmpty(getRelease());
                 
                 String cycle_chkd = StringUtils.trimToEmpty(getCycle());
@@ -204,7 +218,9 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                 String testCaseField_chkd = StringUtils.trimToEmpty(getTestcaseFields());
                 
                 String testSuiteField_chkd = StringUtils.trimToEmpty(getTestsuiteFields());
-                
+
+                String testRunField_chkd = StringUtils.trimToEmpty(getTestRunFields());
+
                 String skipWarning_chkd = StringUtils.trimToEmpty(getSkipWarning());
 
                 String isMatchingRequired_chkd = StringUtils.trimToEmpty(getIsMatchingRequired());
@@ -222,11 +238,13 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                     testSuiteName_chkd= env.expand(testSuiteName_chkd);
                     testSName_chkd= env.expand(testSName_chkd);
                     tsFolderPath_chkd= env.expand(tsFolderPath_chkd);
+                    tcFolderPath_chkd= env.expand(tcFolderPath_chkd);
                     release_chkd= env.expand(release_chkd);
                     cycle_chkd= env.expand(cycle_chkd);
                     project_chkd= env.expand(project_chkd);
                     testCaseField_chkd = env.expand(testCaseField_chkd);
                     testSuiteField_chkd =  env.expand(testSuiteField_chkd);
+                    testRunField_chkd = env.expand(testRunField_chkd);
                     skipWarning_chkd = env.expand(skipWarning_chkd);
                     isMatchingRequired_chkd = env.expand(isMatchingRequired_chkd);
                 }
@@ -323,6 +341,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                                                      testSuiteName_chkd,
                                                      testSName_chkd,
                                                      tsFolderPath_chkd,
+                                                     tcFolderPath_chkd,
                                                      automationFramework_chkd,
                                                      automationHierarchy_chkd,
                                                      buildName_chkd,
@@ -333,6 +352,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                                                      buildnumber,
                                                      testCaseField_chkd,
                                                      testSuiteField_chkd,
+                                                     testRunField_chkd,
                                                      skipWarning_chkd,
                                                      isMatchingRequired_chkd);
             }
