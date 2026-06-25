@@ -174,5 +174,10 @@
             <name>Priyanka Shah</name>
             <email>priyanka.shah@qmetry.com</email>
         </developer>
+        <developer>
+            <id>dharminsolanki</id>
+            <name>Dharmin Solanki</name>
+            <email>dharmin.solanki@smartbear.com</email>
+        </developer>
     </developers>
 </project>
