@@ -21,7 +21,7 @@
     <url>https://wiki.jenkins.io/display/JENKINS/QMetry+Test+Managment+Plugin</url>
     <scm>
 		<connection>scm:git:ssh://github.com/jenkinsci/qmetry-test-management-plugin.git</connection>
-		<developerConnection>scm:git:git@github.com-QMetryDev:jenkinsci/qmetry-test-management-plugin.git</developerConnection>
+		<developerConnection>scm:git:ssh://git@github.com/jenkinsci/qmetry-test-management-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/qmetry-test-management-plugin</url>
 		<tag>HEAD</tag>
 	</scm>
