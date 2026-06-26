@@ -8,22 +8,23 @@
         <relativePath />
     </parent>
     <artifactId>qmetry-test-management</artifactId>
-    <version>1.15-SNAPSHOT</version>
+    <version>${changelist}</version>
     <packaging>hpi</packaging>
     <properties>
+        <changelist>999999-SNAPSHOT</changelist>
         <jenkins.version>2.7.3</jenkins.version>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
     </properties>
     <name>QMetry Test Management Plugin</name>
     <description>Ship high quality products, faster by linking automated test results from Jenkins to QMetry Test Management.</description>
     <url>https://wiki.jenkins.io/display/JENKINS/QMetry+Test+Managment+Plugin</url>
     <scm>
-        <connection>scm:git:ssh://github.com/jenkinsci/qmetry-test-management-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/jenkinsci/qmetry-test-management-plugin.git</developerConnection>
-        <url>https://github.com/jenkinsci/qmetry-test-management-plugin</url>
-        <tag>qmetry-test-management-1.15</tag>
-    </scm>
+		<connection>scm:git:ssh://github.com/jenkinsci/qmetry-test-management-plugin.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/jenkinsci/qmetry-test-management-plugin.git</developerConnection>
+		<url>https://github.com/jenkinsci/qmetry-test-management-plugin</url>
+		<tag>HEAD</tag>
+	</scm>
     <licenses>
         <license>
             <name>GNU General Public License v3.0</name>
@@ -166,6 +167,17 @@
             <url>https://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
     </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>maven.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <developers>
         <developer>
