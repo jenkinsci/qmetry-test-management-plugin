@@ -8,11 +8,12 @@
         <relativePath />
     </parent>
     <artifactId>qmetry-test-management</artifactId>
-    <version>1.15-SNAPSHOT</version>
+    <version>${changelist}</version>
     <packaging>hpi</packaging>
     <properties>
+        <changelist>999999-SNAPSHOT</changelist>
         <jenkins.version>2.7.3</jenkins.version>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
     </properties>
     <name>QMetry Test Management Plugin</name>
