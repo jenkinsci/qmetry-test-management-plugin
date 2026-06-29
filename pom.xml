@@ -14,7 +14,7 @@
         <changelist>999999-SNAPSHOT</changelist>
         <jenkins.version>2.361.4</jenkins.version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
-        <maven.test.skip>true</maven.test.skip>
+        <skipTests>true</skipTests>
     </properties>
     <name>QMetry Test Management Plugin</name>
     <description>Ship high quality products, faster by linking automated test results from Jenkins to QMetry Test Management.</description>
