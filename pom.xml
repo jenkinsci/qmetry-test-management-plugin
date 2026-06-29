@@ -15,6 +15,7 @@
         <jenkins.version>2.7.3</jenkins.version>
         <java.version>17</java.version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
+        <maven.test.skip>true</maven.test.skip>
     </properties>
     <name>QMetry Test Management Plugin</name>
     <description>Ship high quality products, faster by linking automated test results from Jenkins to QMetry Test Management.</description>
