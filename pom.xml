@@ -8,9 +8,10 @@
         <relativePath />
     </parent>
     <artifactId>qmetry-test-management</artifactId>
-    <version>${changelist}</version>
+    <version>${revision}${changelist}</version>
     <packaging>hpi</packaging>
     <properties>
+        <revision>1.16</revision>
         <changelist>999999-SNAPSHOT</changelist>
         <jenkins.version>2.361.4</jenkins.version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
