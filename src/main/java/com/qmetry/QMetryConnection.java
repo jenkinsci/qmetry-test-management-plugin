@@ -46,7 +46,7 @@ public class QMetryConnection {
 
 	public void uploadFileToTestSuite(String filePath, String testSuiteName, String testSName, String tsFolderPath, String tcFolderPath, String automationFramework, String automationHierarchy,
 									  String buildName, String platformName, String project, String release, String cycle, String pluginName, /*BuildListener*/TaskListener listener,
-									  int buildnumber, String proxyUrl, String testCaseField, String testSuiteField, String testRunField, String skipWarning, String isMatchingRequired) throws Exception {
+									  int buildnumber, String proxyUrl, String testCaseField, String testSuiteField, String testRunField, String customTemplateName, String skipWarning, String isMatchingRequired) throws Exception {
 
 		CloseableHttpClient httpClient = null;
 		CloseableHttpResponse response = null;
@@ -122,6 +122,10 @@ public class QMetryConnection {
 		if(testRunField!=null && !testRunField.isEmpty()) {
 			listener.getLogger().println(pluginName + " : testrun_fields '"+ testRunField +"'");
 			builder.addTextBody("testrun_fields", testRunField, ContentType.TEXT_PLAIN);
+		}
+		if(customTemplateName!=null && !customTemplateName.isEmpty()) {
+			listener.getLogger().println(pluginName + " : customTemplateName '"+ customTemplateName +"'");
+			builder.addTextBody("customTemplateName", customTemplateName, ContentType.TEXT_PLAIN);
 		}
 
 		File f = new File(filePath);

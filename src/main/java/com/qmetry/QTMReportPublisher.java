@@ -49,13 +49,14 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
     private final String testcaseFields;
     private final String testsuiteFields;
     private final String testRunFields;
+    private final String customTemplateName;
     private final String skipWarning;
     private final String isMatchingRequired;
     
     @DataBoundConstructor
     public QTMReportPublisher(final String qtmUrl, final String qtmAutomationApiKey, final String proxyUrl, final String automationFramework, final String automationHierarchy,
                               final String testResultFilePath, final String buildName, final String testSuiteName, final String testSName, final String tsFolderPath, final String tcFolderPath, final String platformName,
-                              final String project, final String release, final String cycle, final boolean disableaction, final String testcaseFields, final String testsuiteFields, final String testRunFields, final String skipWarning, final String isMatchingRequired) {
+                              final String project, final String release, final String cycle, final boolean disableaction, final String testcaseFields, final String testsuiteFields, final String testRunFields, final String customTemplateName, final String skipWarning, final String isMatchingRequired) {
         
         this.disableaction = disableaction;
         this.qtmUrl = qtmUrl;
@@ -76,6 +77,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
         this.testcaseFields = testcaseFields;
         this.testsuiteFields = testsuiteFields;
         this.testRunFields = testRunFields;
+        this.customTemplateName = customTemplateName;
         this.skipWarning = skipWarning;
         this.isMatchingRequired = isMatchingRequired;
     }
@@ -156,6 +158,10 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
 	return testRunFields;
     }
 
+    public String getCustomTemplateName() {
+	return customTemplateName;
+    }
+
     public String getSkipWarning() {
 	return skipWarning;
     }
@@ -221,6 +227,8 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
 
                 String testRunField_chkd = StringUtils.trimToEmpty(getTestRunFields());
 
+                String customTemplateName_chkd = StringUtils.trimToEmpty(getCustomTemplateName());
+
                 String skipWarning_chkd = StringUtils.trimToEmpty(getSkipWarning());
 
                 String isMatchingRequired_chkd = StringUtils.trimToEmpty(getIsMatchingRequired());
@@ -245,6 +253,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                     testCaseField_chkd = env.expand(testCaseField_chkd);
                     testSuiteField_chkd =  env.expand(testSuiteField_chkd);
                     testRunField_chkd = env.expand(testRunField_chkd);
+                    customTemplateName_chkd = env.expand(customTemplateName_chkd);
                     skipWarning_chkd = env.expand(skipWarning_chkd);
                     isMatchingRequired_chkd = env.expand(isMatchingRequired_chkd);
                 }
@@ -266,9 +275,14 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                      || automationFramework_chkd.equals("JUNIT")
                      || automationFramework_chkd.equals("QAS")
                      || automationFramework_chkd.equals("HPUFT")
-                     || automationFramework_chkd.equals("ROBOT")))
+                     || automationFramework_chkd.equals("ROBOT")
+                     || automationFramework_chkd.equals("XMLCUSTOM")))
                 {
-                    throw new QMetryException("Please enter a valid automation framework [CUCUMBER/JUNIT/TESTNG/QAS/HPUFT/ROBOT]");
+                    throw new QMetryException("Please enter a valid automation framework [CUCUMBER/JUNIT/TESTNG/QAS/HPUFT/ROBOT/XMLCUSTOM]");
+                }
+                if(automationFramework_chkd.equals("XMLCUSTOM") && StringUtils.isEmpty(customTemplateName_chkd))
+                {
+                    throw new QMetryException("Please provide a Custom Template Name for the Custom XML Template framework");
                 }
                 else
                 {
@@ -353,6 +367,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                                                      testCaseField_chkd,
                                                      testSuiteField_chkd,
                                                      testRunField_chkd,
+                                                     customTemplateName_chkd,
                                                      skipWarning_chkd,
                                                      isMatchingRequired_chkd);
             }
@@ -433,6 +448,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
             items.add("QAS", "QAS");
             items.add("HP-UFT", "HPUFT");
             items.add("Robot", "ROBOT");
+            items.add("Custom XML Template", "XMLCUSTOM");
             return items;
         }
 

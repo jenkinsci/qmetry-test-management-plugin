@@ -22,6 +22,10 @@
 			<f:select />
 		</f:entry>
 		
+		<f:entry title="Custom Template Name" field="customTemplateName">
+			<f:textbox placeholder="Enter Custom Template Name"/>
+		</f:entry>
+
 		<f:entry title="Automation Hierarchy" field="automationHierarchy">
 			<f:select placeholder="Default Hierarchy Supported"/>
 		</f:entry>
