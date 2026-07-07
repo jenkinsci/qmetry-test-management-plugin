@@ -15,6 +15,12 @@
         <jenkins.version>2.361.4</jenkins.version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <skipTests>true</skipTests>
+        <!-- Ban JUnit 4 (org.junit.*) imports; enforce JUnit 5 (Jupiter) in any future tests.
+             NOTE: the enforcer rule that consumes this property was added to the parent POM in
+             jenkinsci/plugin-pom#1178 (post-2025-08-15). On the current parent 4.88 this only
+             sets the property for the health-score probe; actual enforcement requires upgrading
+             the parent POM (tracked as a follow-up — see junit4ban.md). -->
+        <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
     </properties>
     <name>QMetry Test Management Plugin</name>
     <description>Ship high quality products, faster by linking automated test results from Jenkins to QMetry Test Management.</description>
