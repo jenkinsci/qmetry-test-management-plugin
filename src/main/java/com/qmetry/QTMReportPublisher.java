@@ -282,7 +282,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                 }
                 if(automationFramework_chkd.equals("XMLCUSTOM") && StringUtils.isEmpty(customTemplateName_chkd))
                 {
-                    throw new QMetryException("Please provide a Custom Template Name for the Custom XML Template framework");
+                    throw new QMetryException("Please provide a Custom Template Name for the XMLCUSTOM framework");
                 }
                 else
                 {
@@ -448,7 +448,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
             items.add("QAS", "QAS");
             items.add("HP-UFT", "HPUFT");
             items.add("Robot", "ROBOT");
-            items.add("Custom XML Template", "XMLCUSTOM");
+            items.add("XMLCUSTOM", "XMLCUSTOM");
             return items;
         }
 

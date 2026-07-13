@@ -26,7 +26,7 @@ Now install the **.hpi** file generated inside the */target* directory of the bu
 
 ## Using the plugin
 We assume that you have a Jenkins project that produces test result files on build, using automation frameworks like Cucumber, TestNG, JUnit, HP-UFT, QAS, or Robot. 
-You can also upload XML result files parsed by a **Custom XML Template** configured in QMetry.
+You can also upload XML result files parsed by a **XMLCUSTOM** template configured in QMetry.
 To upload result files to QMetry, follow the steps.
 
 1. Login to Jenkins instance.
@@ -37,8 +37,8 @@ Fill the QMetry configuration form as per your requirement.
 
 * **QMetry instance URL** - url to your qtm instance
 * **Automation API Key** - Automation Key
-* **Automation Framework** - JUNIT/TESTNG/CUCUMBER/QAS/HP-UFT/ROBOT/Custom XML Template
-* **Custom Template Name** (required only for *Custom XML Template*) - Name of the Custom XML Template configured in QMetry used to parse the uploaded result file(s). Ignored for all other frameworks.
+* **Automation Framework** - JUNIT/TESTNG/CUCUMBER/QAS/HP-UFT/ROBOT/XMLCUSTOM
+* **Custom Template Name** (required only for *XMLCUSTOM*) - Name of the custom XML template configured in QMetry used to parse the uploaded result file(s). Ignored for all other frameworks.
 * **Automation Hierarchy** - Hierarchy which will be used to parse test result files on QTM
 * **Result File(s) Path/Directory** - path to result file (or directory for multiple files) relative to build directory
 * **Project** - Name, ID or Key of QMetry Project
