@@ -5,7 +5,7 @@ https://wiki.jenkins.io/display/JENKINS/QMetry+Test+Managment+Plugin
 QMetry Test Management plugin for Jenkins has been designed to seamlessly integrate your CI/CD pipeline with QMetry.
 
 Easily configure Jenkins to submit your test results to QMetry without needing to write any code or deal with REST API. 
-Your Test Results could be from any automation framework like Cucumber, Test NG, JUnit, QAF, HP-UFT, or Robot.
+Your Test Results could be from any automation framework like Cucumber, Test NG, JUnit, QAF, HP-UFT, Robot or a custom XML template (i.e. XMLCUSTOM).
 
 ## Installing the plugin
 Follow the steps to install QMetry Test Management Plugin directly from Jenkins marketplace.
