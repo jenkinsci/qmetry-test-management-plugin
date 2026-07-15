@@ -5,7 +5,7 @@ https://wiki.jenkins.io/display/JENKINS/QMetry+Test+Managment+Plugin
 QMetry Test Management plugin for Jenkins has been designed to seamlessly integrate your CI/CD pipeline with QMetry.
 
 Easily configure Jenkins to submit your test results to QMetry without needing to write any code or deal with REST API. 
-Your Test Results could be from any automation framework like Cucumber, Test NG, JUnit, QAF, HP-UFT, or Robot.
+Your Test Results could be from any automation framework like Cucumber, Test NG, JUnit, QAF, HP-UFT, Robot or a custom XML template (i.e. XMLCUSTOM).
 
 ## Installing the plugin
 Follow the steps to install QMetry Test Management Plugin directly from Jenkins marketplace.
@@ -26,6 +26,7 @@ Now install the **.hpi** file generated inside the */target* directory of the bu
 
 ## Using the plugin
 We assume that you have a Jenkins project that produces test result files on build, using automation frameworks like Cucumber, TestNG, JUnit, HP-UFT, QAS, or Robot. 
+You can also upload XML result files parsed by a **XMLCUSTOM** template configured in QMetry.
 To upload result files to QMetry, follow the steps.
 
 1. Login to Jenkins instance.
@@ -36,19 +37,22 @@ Fill the QMetry configuration form as per your requirement.
 
 * **QMetry instance URL** - url to your qtm instance
 * **Automation API Key** - Automation Key
-* **Automation Framework** - JUNIT/TESTNG/CUCUMBER/QAS/HP-UFT/ROBOT
+* **Automation Framework** - JUNIT/TESTNG/CUCUMBER/QAS/HP-UFT/ROBOT/XMLCUSTOM
+* **Custom Template Name** (required only for *XMLCUSTOM*) - Name of the custom XML template configured in QMetry used to parse the uploaded result file(s). Ignored for all other frameworks.
 * **Automation Hierarchy** - Hierarchy which will be used to parse test result files on QTM
 * **Result File(s) Path/Directory** - path to result file (or directory for multiple files) relative to build directory
 * **Project** - Name, ID or Key of QMetry Project
 * **Test Suite ID** (optional) - Key/ID of test suite to be reused
 * **Test Suite Name** (optional) - Test Suite Name (This will create a new test suite with given name)
 * **Test Suite Folder Path** (optional) - Test Suite Folder Path (This will upload results to the mentioned Test Suite Folder. It is ignored if the QMetry instance type is Server.)
+* **Test Case Folder Path** (optional) - Test Case Folder Path (This will upload the test cases to the mentioned Test Case Folder. It is ignored if the QMetry instance type is Server.)
 * **Release** (optional if cycle not present) - Target Release ID or Release name
 * **Cycle** (optional) - Target Cycle Id or Cycle Name
 * **Build** (optional) - Target Build ID or Build name
 * **Platform** (optional) - Name of the platform to connect the suite
 * **Test Case Fields** (optional) - Test Case Fields in Json Format
 * **Test Suite Fields** (optional) - Test Suite Fields in Json Format
+* **Test Run Fields** (optional) - Test Run Fields in Json Format (**supports User Defined Fields (UDFs) only**). Provide test execution UDFs under the `userDefinedFields` key.
 * **skipWarning** (optional) - 0 : (Default) Test Case Import will be failed if the result file contains test case summary with more than 255 characters, 1 : Test Cases can be imported by ignoring the warning about summary length. If the test case summary is longer, it will be truncated to 255 characters
 * **isMatchingRequired** (optional) - 1 : (Default) Create a new Test Case or Test Case Version if no version matches with the one being uploaded, 0 : Reuse already linked Test Case version on Test Suite OR auto link the existing latest version of Test Case, if the Test Case entity key OR Test Case summary is found matching
 

@@ -1,0 +1,15 @@
+version: 2
+updates:
+  # Keeps Maven dependencies (parent POM, plugins, libraries) up to date
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # Keeps GitHub Actions used in workflows (e.g. .github/workflows/cd.yaml) up to date
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5

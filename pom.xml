@@ -8,20 +8,22 @@
         <relativePath />
     </parent>
     <artifactId>qmetry-test-management</artifactId>
-    <version>${changelist}</version>
+    <version>${revision}${changelist}</version>
     <packaging>hpi</packaging>
     <properties>
+        <revision>1.16</revision>
         <changelist>999999-SNAPSHOT</changelist>
         <jenkins.version>2.361.4</jenkins.version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <skipTests>true</skipTests>
+        <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
     </properties>
     <name>QMetry Test Management Plugin</name>
     <description>Ship high quality products, faster by linking automated test results from Jenkins to QMetry Test Management.</description>
     <url>https://wiki.jenkins.io/display/JENKINS/QMetry+Test+Managment+Plugin</url>
     <scm>
-		<connection>scm:git:ssh://github.com/jenkinsci/qmetry-test-management-plugin.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/jenkinsci/qmetry-test-management-plugin.git</developerConnection>
+		<connection>scm:git:https://github.com/jenkinsci/qmetry-test-management-plugin.git</connection>
+		<developerConnection>scm:git:git@github.com:jenkinsci/qmetry-test-management-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/qmetry-test-management-plugin</url>
 		<tag>HEAD</tag>
 	</scm>
@@ -149,6 +151,12 @@
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
