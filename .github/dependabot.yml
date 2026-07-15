@@ -6,6 +6,12 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    ignore:
+      # The workflow-* plugin dependencies are pinned to versions compatible with
+      # the current jenkins.version (2.361.4). Newer releases require a much higher
+      # Jenkins core (e.g. workflow-job 1590.x needs 2.556+) and break the build.
+      # Ignore them until the Jenkins baseline / parent POM is upgraded.
+      - dependency-name: "org.jenkins-ci.plugins.workflow:*"
 
   # Keeps GitHub Actions used in workflows (e.g. .github/workflows/cd.yaml) up to date
   - package-ecosystem: "github-actions"
