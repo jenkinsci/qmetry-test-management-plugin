@@ -92,7 +92,7 @@
             <plugin>
                 <groupId>com.cloudbees</groupId>
                 <artifactId>maven-license-plugin</artifactId>
-                <version>1.7</version>
+                <version>1.17</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
