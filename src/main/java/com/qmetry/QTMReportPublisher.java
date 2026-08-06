@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
+import hudson.Util;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 
@@ -191,47 +191,47 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                 listener.getLogger().println("-------------------------------------------------------------------------------");
                 listener.getLogger().println("                           QMetry Test Management                              ");
                 listener.getLogger().println("-------------------------------------------------------------------------------");
-                String qtmUrl_chkd = StringUtils.trimToEmpty(getQtmUrl());
+                String qtmUrl_chkd = Util.fixNull(getQtmUrl()).trim();
                 
-                String qtmAutomationApiKey_chkd = StringUtils.trimToEmpty(Secret.toString(getQtmAutomationApiKey()));
+                String qtmAutomationApiKey_chkd = Util.fixNull(Secret.toString(getQtmAutomationApiKey())).trim();
 
-                String proxyUrl_chkd = StringUtils.trimToEmpty(getProxyUrl());
+                String proxyUrl_chkd = Util.fixNull(getProxyUrl()).trim();
                 
-                String automationFramework_chkd = StringUtils.trimToEmpty(getAutomationFramework());
+                String automationFramework_chkd = Util.fixNull(getAutomationFramework()).trim();
                 
-                String automationHierarchy_chkd = StringUtils.trimToEmpty(getAutomationHierarchy());
+                String automationHierarchy_chkd = Util.fixNull(getAutomationHierarchy()).trim();
                 
-                String testResultFilePath_chkd = StringUtils.trimToEmpty(getTestResultFilePath()).replace("\\","/");
+                String testResultFilePath_chkd = Util.fixNull(getTestResultFilePath()).trim().replace("\\","/");
                 
-                String buildName_chkd = StringUtils.trimToEmpty(getBuildName());
+                String buildName_chkd = Util.fixNull(getBuildName()).trim();
                 
-                String platformName_chkd = StringUtils.trimToEmpty(getPlatformName());
+                String platformName_chkd = Util.fixNull(getPlatformName()).trim();
                 
-                String testSuiteName_chkd = StringUtils.trimToEmpty(getTestSuiteName());
+                String testSuiteName_chkd = Util.fixNull(getTestSuiteName()).trim();
                 
-                String testSName_chkd = StringUtils.trimToEmpty(getTestSName());
+                String testSName_chkd = Util.fixNull(getTestSName()).trim();
                 
-                String tsFolderPath_chkd = StringUtils.trimToEmpty(getTsFolderPath());
+                String tsFolderPath_chkd = Util.fixNull(getTsFolderPath()).trim();
 
-                String tcFolderPath_chkd = StringUtils.trimToEmpty(getTcFolderPath());
+                String tcFolderPath_chkd = Util.fixNull(getTcFolderPath()).trim();
 
-                String release_chkd = StringUtils.trimToEmpty(getRelease());
+                String release_chkd = Util.fixNull(getRelease()).trim();
                 
-                String cycle_chkd = StringUtils.trimToEmpty(getCycle());
+                String cycle_chkd = Util.fixNull(getCycle()).trim();
                 
-                String project_chkd = StringUtils.trimToEmpty(getProject());
+                String project_chkd = Util.fixNull(getProject()).trim();
                 
-                String testCaseField_chkd = StringUtils.trimToEmpty(getTestcaseFields());
+                String testCaseField_chkd = Util.fixNull(getTestcaseFields()).trim();
                 
-                String testSuiteField_chkd = StringUtils.trimToEmpty(getTestsuiteFields());
+                String testSuiteField_chkd = Util.fixNull(getTestsuiteFields()).trim();
 
-                String testRunField_chkd = StringUtils.trimToEmpty(getTestRunFields());
+                String testRunField_chkd = Util.fixNull(getTestRunFields()).trim();
 
-                String customTemplateName_chkd = StringUtils.trimToEmpty(getCustomTemplateName());
+                String customTemplateName_chkd = Util.fixNull(getCustomTemplateName()).trim();
 
-                String skipWarning_chkd = StringUtils.trimToEmpty(getSkipWarning());
+                String skipWarning_chkd = Util.fixNull(getSkipWarning()).trim();
 
-                String isMatchingRequired_chkd = StringUtils.trimToEmpty(getIsMatchingRequired());
+                String isMatchingRequired_chkd = Util.fixNull(getIsMatchingRequired()).trim();
                 
                 if(env != null)
                 {
@@ -260,7 +260,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                 
                 String displayName = pluginName + " : Starting Post Build Action";
                 
-                if (StringUtils.isNotEmpty(project_chkd)) {
+                if (!project_chkd.isEmpty()) {
                     displayName += " : " + project_chkd;
                 } else {
                     throw new QMetryException("Target project name cannot be empty!");
@@ -269,7 +269,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                 //String repeated = new String(new char[displayName.length()]).replace("\0", "-");
                 //listener.getLogger().println("\n" + repeated + "\n" + displayName + "\n" + repeated);
                 listener.getLogger().println(displayName);
-                if(StringUtils.isEmpty(automationFramework_chkd) ||
+                if(automationFramework_chkd.isEmpty() ||
                    !(automationFramework_chkd.equals("CUCUMBER")
                      || automationFramework_chkd.equals("TESTNG")
                      || automationFramework_chkd.equals("JUNIT")
@@ -280,7 +280,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                 {
                     throw new QMetryException("Please enter a valid automation framework [CUCUMBER/JUNIT/TESTNG/QAS/HPUFT/ROBOT/XMLCUSTOM]");
                 }
-                if(automationFramework_chkd.equals("XMLCUSTOM") && StringUtils.isEmpty(customTemplateName_chkd))
+                if(automationFramework_chkd.equals("XMLCUSTOM") && customTemplateName_chkd.isEmpty())
                 {
                     throw new QMetryException("Please provide a Custom Template Name for the XMLCUSTOM framework");
                 }
@@ -288,7 +288,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                 {
                     if(automationFramework_chkd.equals("JUNIT"))
                     {
-                        if(StringUtils.isNotEmpty(automationHierarchy_chkd))
+                        if(!automationHierarchy_chkd.isEmpty())
                         {
                             if(!(automationHierarchy_chkd.equals("1") || automationHierarchy_chkd.equals("2") || automationHierarchy_chkd.equals("3")))
                             {
@@ -298,7 +298,7 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                     }
                     else if(automationFramework_chkd.equals("TESTNG"))
                     {
-                        if(StringUtils.isNotEmpty(automationHierarchy_chkd))
+                        if(!automationHierarchy_chkd.isEmpty())
                         {
                             if(!(automationHierarchy_chkd.equals("1") || automationHierarchy_chkd.equals("2") || automationHierarchy_chkd.equals("3")))
                             {
@@ -308,39 +308,39 @@ public class QTMReportPublisher extends Recorder implements SimpleBuildStep {
                     }
                     else
                     {
-                        if(StringUtils.isNotEmpty(automationHierarchy_chkd))
+                        if(!automationHierarchy_chkd.isEmpty())
                         {
                             listener.getLogger().println(pluginName + " : Skipping automationHierarchy becuase it is not supported for framework: " + automationFramework_chkd);
                         }
                     }
                 }
-                if(StringUtils.isNotEmpty(skipWarning_chkd))
+                if(!skipWarning_chkd.isEmpty())
                 {
                     if(!(skipWarning_chkd.equals("0") || skipWarning_chkd.equals("1")))
                     {
                 	throw new QMetryException("Please provide valid skipWarning value");
                     }
                 }
-                if(StringUtils.isNotEmpty(isMatchingRequired_chkd))
+                if(!isMatchingRequired_chkd.isEmpty())
                 {
                     if(!(isMatchingRequired_chkd.equals("false") || isMatchingRequired_chkd.equals("true")))
                     {
                 	throw new QMetryException("Please provide valid isMatchingRequired value");
                     }
                 } 
-                if(StringUtils.isEmpty(qtmUrl_chkd)) {
+                if(qtmUrl_chkd.isEmpty()) {
                     throw new QMetryException("URL to qmetry instance cannot be empty");
                 }
-                if(StringUtils.isEmpty(qtmAutomationApiKey_chkd)) {
+                if(qtmAutomationApiKey_chkd.isEmpty()) {
                     throw new QMetryException("Automation API key cannot be empty");
                 }
-                if(StringUtils.isEmpty(testResultFilePath_chkd)) {
+                if(testResultFilePath_chkd.isEmpty()) {
                     throw new QMetryException("Please enter a valid path to your test result file(s) path/directory");
                 }
-                if(StringUtils.isNotEmpty(cycle_chkd) && StringUtils.isEmpty(release_chkd)) {
+                if(!cycle_chkd.isEmpty() && release_chkd.isEmpty()) {
                     throw new QMetryException("Please provide target release for cycle '"+cycle_chkd+"' in project '"+project_chkd+"'");
                 }
-                if(StringUtils.isNotEmpty(buildName_chkd) && (StringUtils.isEmpty(release_chkd) || StringUtils.isEmpty(cycle_chkd))) {
+                if(!buildName_chkd.isEmpty() && (release_chkd.isEmpty() || cycle_chkd.isEmpty())) {
                     throw new QMetryException("Please provide target release and cycle for build '"+buildName_chkd+"' in project '"+project_chkd+"'");
                 }
                 
