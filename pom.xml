@@ -64,7 +64,7 @@
                             <path>
                                 <groupId>net.java.sezpoz</groupId>
                                 <artifactId>sezpoz</artifactId>
-                                <version>1.13</version>
+                                <version>1.17</version>
                             </path>
                         </annotationProcessorPaths>
                     </configuration>
@@ -84,7 +84,7 @@
                         <path>
                             <groupId>net.java.sezpoz</groupId>
                             <artifactId>sezpoz</artifactId>
-                            <version>1.13</version>
+                            <version>1.17</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
